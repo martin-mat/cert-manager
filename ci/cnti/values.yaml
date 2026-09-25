@@ -1,0 +1,23 @@
+# Values for the CNTi Test Suite run (.github/workflows/cnti.yml): the CRDs
+# installed with the chart, resource requests and limits on every component,
+# and a group id next to the chart's non-root user (the images run as 65532).
+crds:
+  enabled: true
+resources: &res
+  requests: {cpu: 50m, memory: 64Mi}
+  limits: {cpu: 500m, memory: 256Mi}
+securityContext: &podsc
+  runAsNonRoot: true
+  runAsUser: 65532
+  runAsGroup: 65532
+  seccompProfile:
+    type: RuntimeDefault
+webhook:
+  resources: *res
+  securityContext: *podsc
+cainjector:
+  resources: *res
+  securityContext: *podsc
+startupapicheck:
+  resources: *res
+  securityContext: *podsc

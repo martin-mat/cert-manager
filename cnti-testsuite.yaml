@@ -1,0 +1,20 @@
+---
+# CNTi Test Suite configuration for cert-manager: the released OCI chart,
+# with its CRDs.
+config_version: "v2"
+common:
+  container_names:
+    # Retained release tags used by the rolling update, downgrade and
+    # rollback tests; the chart version is the tag under test.
+    - name: cert-manager-controller
+      rolling_update_test_tag: "v1.21.1"
+      rolling_downgrade_test_tag: "v1.20.4"
+      rolling_version_change_test_tag: "v1.21.1"
+      rollback_from_tag: "v1.21.1"
+deployments:
+  helm_charts:
+    - name: cert-manager
+      registry_url: oci://quay.io/jetstack/charts/cert-manager
+      chart_version: v1.21.2
+      namespace: cert-manager
+      helm_values: --values ci/cnti/values.yaml
